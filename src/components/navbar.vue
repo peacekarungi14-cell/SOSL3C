@@ -1,33 +1,89 @@
 <template>
   <nav class="navbar">
+    <!-- Logo -->
     <img src="../assets/sos.jpg" class="navbar-logo" alt="Logo" />
+
+    <!-- Navigation -->
     <ul class="navbar-links">
-      <li><router-link to="/">Home</router-link></li>
-      <li><router-link to="/about">About</router-link></li>
-      <li><router-link to="/services">Services</router-link></li>
+      <li><router-link to="/">{{ text.home }}</router-link></li>
+      <li><router-link to="/about">{{ text.about }}</router-link></li>
+      <li><router-link to="/services">{{ text.services }}</router-link></li>
+
+      <!-- Gallery -->
       <li class="dropdown">
-        <span>Gallery ▾</span>
+        <span>{{ text.gallery }} ▾</span>
         <ul class="dropdown-menu">
-          <li><router-link to="/gallery">Images</router-link></li>
-          <li><router-link to="/gallery">Videos</router-link></li>
+          <li><router-link to="/gallery">{{ text.images }}</router-link></li>
+          <li><router-link to="/gallery">{{ text.videos }}</router-link></li>
         </ul>
       </li>
+
+      <!-- Destination -->
       <li class="dropdown">
-        <span>Destination ▾</span>
+        <span>{{ text.destination }} ▾</span>
         <ul class="dropdown-menu">
-          <li><router-link to="/destination">Kigali</router-link></li>
-          <li><router-link to="/destination">South</router-link></li>
-          <li><router-link to="/destination">West</router-link></li>
-          <li><router-link to="/destination">North</router-link></li>
-          <li><router-link to="/destination">East</router-link></li>
+          <li><router-link to="/destination">{{ text.kigali }}</router-link></li>
+          <li><router-link to="/destination">{{ text.south }}</router-link></li>
+          <li><router-link to="/destination">{{ text.west }}</router-link></li>
+          <li><router-link to="/destination">{{ text.north }}</router-link></li>
+          <li><router-link to="/destination">{{ text.east }}</router-link></li>
         </ul>
       </li>
-      <li><router-link to="/contact">Contact</router-link></li>
+
+      <li><router-link to="/contact">{{ text.contact }}</router-link></li>
+
+      <!-- Language switch -->
+      <li class="language-switch">
+        <button @click="changeLanguage('en')">English</button>
+        <button @click="changeLanguage('rw')">Kinyarwanda</button>
+      </li>
     </ul>
   </nav>
 </template>
 
-<script setup></script>
+<script setup>
+import { ref } from "vue"
+
+const translations = {
+  en: {
+    home: "Home",
+    about: "About",
+    services: "Services",
+    gallery: "Gallery",
+    images: "Images",
+    videos: "Videos",
+    destination: "Destination",
+    kigali: "Kigali",
+    south: "South",
+    west: "West",
+    north: "North",
+    east: "East",
+    contact: "Contact",
+  },
+
+  rw: {
+    home: "Ahabanza",
+    about: "Ibitwerekeyeho",
+    services: "Serivisi",
+    gallery: "Amafoto",
+    images: "Amashusho",
+    videos: "Amavidewo",
+    destination: "Aho Wasura",
+    kigali: "Kigali",
+    south: "Amajyepfo",
+    west: "Iburengerazuba",
+    north: "Amajyaruguru",
+    east: "Iburasirazuba",
+    contact: "Twandikire",
+  },
+}
+
+const text = ref(translations.en)
+
+const changeLanguage = (lang) => {
+  text.value = translations[lang]
+}
+</script>
 
 <style scoped>
 .navbar {
@@ -39,10 +95,12 @@
   justify-content: space-between;
   flex-wrap: wrap;
 }
+
 .navbar-logo {
   height: 40px;
   width: auto;
 }
+
 .navbar-links {
   display: flex;
   gap: 1rem;
@@ -52,19 +110,24 @@
   margin: 0;
   padding: 0;
 }
+
 .navbar-links li {
   position: relative;
 }
+
 .navbar-links a,
 .navbar-links span {
   color: white;
   text-decoration: none;
   cursor: pointer;
 }
+
 .navbar-links a:hover,
 .navbar-links span:hover {
   color: #facc15;
 }
+
+/* Dropdown */
 .dropdown-menu {
   position: absolute;
   left: 0;
@@ -76,23 +139,43 @@
   opacity: 0;
   visibility: hidden;
   transform: translateY(0.5rem);
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: 0.2s ease;
   min-width: 140px;
   z-index: 10;
 }
+
 .dropdown:hover .dropdown-menu {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
 }
-.dropdown-menu li {
-  width: 100%;
-}
+
 .dropdown-menu a {
   display: block;
   padding: 0.75rem 1rem;
 }
+
 .dropdown-menu a:hover {
   background: #14532d;
+}
+
+/* Language buttons */
+.language-switch {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.language-switch button {
+  background: white;
+  color: #166534;
+  border: none;
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.language-switch button:hover {
+  background: #facc15;
 }
 </style>
